@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ifuture.adonline.grpc";
+
+package com.ifuture.adonline;
+
+// 广告数据服务
+service AdvertisingService {
+    rpc getAdvertisement (AdvRequest) returns (AdvResponse) {
+    }
+}
+
+message AdvRequest {
+    string maid = 1; // 用户ID
+    string bussinessId = 2; // 商家ID
+    string ua = 3; // User-Agent的信息
+    string ip = 4; // 交易时的IP
+    string payMethond = 5; // 交易的付账方式
+    int32 pay = 6; // 交易金额，单位为分
+    string networkId = 7; // 用户的网络
+}
+
+message AdvResponse {
+    string adid = 1; // 广告ID
+}
