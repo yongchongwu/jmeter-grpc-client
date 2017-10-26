@@ -9,6 +9,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
+@SuppressWarnings("unchecked")
 public class AdvertisingServiceSampler extends AbstractJavaSamplerClient {
 
   AdvertisingServiceClient bclient = null;
