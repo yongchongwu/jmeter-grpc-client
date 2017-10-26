@@ -1,8 +1,9 @@
 package com.ifuture.adonline.jmeter;
 
-import com.ifuture.adonline.grpc.AdvRequest;
 import com.ifuture.adonline.grpc.AdvertisingServiceClient;
+import fpay.bills.Ifuture.AdvRequest;
 import io.grpc.StatusRuntimeException;
+import java.util.List;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -42,15 +43,14 @@ public class AdvertisingServiceSampler extends AbstractJavaSamplerClient {
   public SampleResult runTest(JavaSamplerContext context) {
     SampleResult result = new SampleResult();
     boolean success = true;
-    String response = "";
     result.sampleStart();
 
     try {
       AdvRequest request = this.bclient.getTestAdvRequest();
-      response = this.bclient.getTestAdvertisement(request);
+      List list = this.bclient.getTestAdvertisement(request);
       result.sampleEnd();
       result.setSuccessful(success);
-      result.setResponseData(response.getBytes());
+      result.setResponseData(String.join(",", list).getBytes());
       result.setResponseMessage("Successfully performed backup getAdvertisement");
       result.setResponseCodeOK(); // 200 code
 

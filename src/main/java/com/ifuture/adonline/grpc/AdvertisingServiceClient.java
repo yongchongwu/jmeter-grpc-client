@@ -1,9 +1,14 @@
 package com.ifuture.adonline.grpc;
 
+import com.google.protobuf.ProtocolStringList;
+import fpay.bills.AdvertisingServiceGrpc;
+import fpay.bills.Ifuture.AdvRequest;
+import fpay.bills.Ifuture.AdvResponse;
 import io.grpc.ClientInterceptors;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AdvertisingServiceClient {
@@ -46,12 +51,15 @@ public class AdvertisingServiceClient {
     return request;
   }
 
-  public String getTestAdvertisement(AdvRequest request) {
+  public List<String> getTestAdvertisement(AdvRequest request) {
     try {
       AdvResponse response = blockingStub.getAdvertisement(request);
-      String adid = response.getAdid();
-      System.out.println(adid);
-      return adid;
+      ProtocolStringList list = response.getAdidList();
+      System.out.println("grpc请求返回结果如下:");
+      for (String adid : list) {
+        System.out.println(adid);
+      }
+      return list;
     } catch (StatusRuntimeException e) {
       throw e;
     }
