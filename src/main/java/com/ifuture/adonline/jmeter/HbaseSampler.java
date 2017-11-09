@@ -12,23 +12,20 @@ import org.apache.jmeter.samplers.SampleResult;
 public class HbaseSampler extends AbstractJavaSamplerClient {
 
   HbaseTestClient client = null;
-  String table_name = "";
 
   @Override
   public void setupTest(JavaSamplerContext context) {
     String host_name = context.getParameter("host_name");
-    String port = context.getParameter("port");
-    this.table_name = context.getParameter("table_name");
-    this.client = new HbaseTestClient(host_name, port);
+    String host_port = context.getParameter("host_port");
+    this.client = new HbaseTestClient(host_name, host_port);
     super.setupTest(context);
   }
 
   @Override
   public Arguments getDefaultParameters() {
     Arguments defaultParameters = new Arguments();
-    defaultParameters.addArgument("host_name", "master");
-    defaultParameters.addArgument("port", "2181");
-    defaultParameters.addArgument("table_name", "ads");
+    defaultParameters.addArgument("host_name", "lehui-demo-cdh001");
+    defaultParameters.addArgument("host_port", "2181");
     return defaultParameters;
   }
 
@@ -39,7 +36,8 @@ public class HbaseSampler extends AbstractJavaSamplerClient {
     result.sampleStart();
 
     try {
-      List<Map<String, Object>> list = this.client.scanTable(this.table_name);
+      List<Map<String, Object>> list = this.client.scanTable("ads");
+      System.out.println("ok"+result.getThreadName());
       result.sampleEnd();
       result.setSuccessful(success);
       result.setResponseData("ok".getBytes());
@@ -49,8 +47,6 @@ public class HbaseSampler extends AbstractJavaSamplerClient {
       result.sampleEnd(); // stop stopwatch
       result.setSuccessful(false);
       result.setResponseMessage("Exception: " + e);
-      success = false;
-      result.setSuccessful(success);
       // get stack trace as a String to return as document data
       java.io.StringWriter stringWriter = new java.io.StringWriter();
       e.printStackTrace(new java.io.PrintWriter(stringWriter));
