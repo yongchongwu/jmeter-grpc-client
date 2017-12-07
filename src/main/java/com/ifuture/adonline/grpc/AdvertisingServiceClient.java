@@ -9,6 +9,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class AdvertisingServiceClient {
@@ -52,8 +53,7 @@ public class AdvertisingServiceClient {
   }
 
   public String getRandomVal(String[] arr){
-    int index = (int) (Math.random() * arr.length);
-    return arr[index];
+    return arr[new Random().nextInt(arr.length)];
   }
 
   public List<String> getTestAdvertisement(AdvRequest request) {
