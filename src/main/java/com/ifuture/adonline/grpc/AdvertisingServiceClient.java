@@ -40,15 +40,20 @@ public class AdvertisingServiceClient {
 
   public AdvRequest getTestAdvRequest() {
     AdvRequest.Builder builder = AdvRequest.newBuilder();
-    builder.setMaid("1");// 用户ID
+    builder.setMaid(getRandomVal(new String[]{"00052","00062","0009g"}));// 用户ID
     builder.setBussinessId("2");// 商家ID
-    builder.setUa("3");// User-Agent的信息
-    builder.setIp("4");// 交易时的IP
-    builder.setPayMethond("5");// 交易的付账方式
-    builder.setPay(6);// 交易金额，单位为分
-    builder.setNetworkId("7");// 用户的网络
+    builder.setUa(getRandomVal(new String[]{"Android","iOS"}));// User-Agent的信息
+    builder.setIp("127.0.0.1");// 交易时的IP
+    builder.setPayMethond("4JBo");// 交易的付账方式
+    builder.setPay(0);// 交易金额，单位为分
+    builder.setNetworkId(getRandomVal(new String[]{"4g","3g","wifi"}));// 用户的网络
     AdvRequest request = builder.build();
     return request;
+  }
+
+  public String getRandomVal(String[] arr){
+    int index = (int) (Math.random() * arr.length);
+    return arr[index];
   }
 
   public List<String> getTestAdvertisement(AdvRequest request) {
